@@ -26,7 +26,7 @@ class App extends React.Component{
         //1. take copy of state 
         const order = {...this.state.order}
         //2. either add the order or create key and make it 1.
-        if(typeof order[key] == 'undefined'){
+        if(typeof order[key] === 'undefined'){
             order[key] = 1;
         }
         else{
@@ -56,7 +56,10 @@ class App extends React.Component{
                         ))}
                     </ul>
                 </div>
-                <Order />
+                <Order 
+                    fishes={this.state.fishes} 
+                    order={this.state.order}
+                />
                 <Inventory 
                     addFish={this.addFish} 
                     loadSampleFishes={this.loadSampleFishes}
