@@ -8,3 +8,4 @@ In this course the basics of react is covered by building a interactive menu for
 - state management 
 - presisting state with a database (firebase) 
 
+![alt text]("./catch-of-the-day/images/screenshot.PNG);
