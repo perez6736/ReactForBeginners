@@ -4,12 +4,27 @@ import Order from './Order'
 import Inventory from './Inventory'
 import sampleFishes from '../sample-fishes'
 import Fish from './Fish'
+import base from "../base"
 
 class App extends React.Component{
     state = {
         fishes: {},
         order: {}
+    };
+
+    componentDidMount() {
+        // this uses the rebase library to sync state 
+        this.ref = base.syncState(`${this.props.match.params.storeID}/fishes`,{
+            context: this,
+            state: "fishes"
+        });
     }
+
+    //need to unmount because then rebase will keep listening and will cause memory leaks. 
+    componentWillUnmount(){
+        base.removeBinding(this.ref);
+    }
+
     addFish = fish => {
         //1. take a copy of the existing state 
         //do not edit the state directly because that would be a mutation and thats bad. 

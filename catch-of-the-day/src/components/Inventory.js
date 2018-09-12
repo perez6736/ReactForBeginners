@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import AddFishForm from './AddFishForm';
 
 class Inventory extends React.Component{
