@@ -13,11 +13,24 @@ class App extends React.Component{
     };
 
     componentDidMount() {
+        //need to reinstate the local storage
+        const localstorageRef = localStorage.getItem(this.props.match.params.storeID);
+        if(localstorageRef){
+            console.log(localstorageRef);
+            this.setState({ order: JSON.parse(localstorageRef) });
+        }
         // this uses the rebase library to sync state 
         this.ref = base.syncState(`${this.props.match.params.storeID}/fishes`,{
             context: this,
             state: "fishes"
         });
+    }
+
+    //we need to update loval storage whenever the order is updated. 
+    componentDidUpdate(){
+        console.log(this.state.order);
+        localStorage.setItem(this.props.match.params.storeID, JSON.stringify(this.state.order));
+        console.log("updated!");
     }
 
     //need to unmount because then rebase will keep listening and will cause memory leaks. 
