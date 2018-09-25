@@ -16,7 +16,6 @@ class App extends React.Component{
         //need to reinstate the local storage
         const localstorageRef = localStorage.getItem(this.props.match.params.storeID);
         if(localstorageRef){
-            console.log(localstorageRef);
             this.setState({ order: JSON.parse(localstorageRef) });
         }
         // this uses the rebase library to sync state 
@@ -28,9 +27,7 @@ class App extends React.Component{
 
     //we need to update loval storage whenever the order is updated. 
     componentDidUpdate(){
-        console.log(this.state.order);
         localStorage.setItem(this.props.match.params.storeID, JSON.stringify(this.state.order));
-        console.log("updated!");
     }
 
     //need to unmount because then rebase will keep listening and will cause memory leaks. 
@@ -48,6 +45,15 @@ class App extends React.Component{
         this.setState({
             fishes
         });
+    }
+
+    updateFish = (key, updatedFish) => {
+        //take copy of state
+        const fishes = {...this.state.fishes}
+        //then upadte that state 
+        fishes[key] = updatedFish;
+        //then state ^ to the state 
+        this.setState({ fishes });
     }
 
     addToOrder = (key) => {
@@ -90,7 +96,9 @@ class App extends React.Component{
                 />
                 <Inventory 
                     addFish={this.addFish} 
+                    updateFish = {this.updateFish}
                     loadSampleFishes={this.loadSampleFishes}
+                    fishes = {this.state.fishes}
                 />
             </div>
         );
